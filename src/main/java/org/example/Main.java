@@ -34,8 +34,7 @@ public class Main {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.printf("Не нашёлся файл для считывания сотрудников.%nСоздаём новый файл со случайными сотрудниками");
-            new PrintWriter(new File("C:\\Users\\DeaDFlame\\Desktop\\Employee\\EmployeeList.csv"));
+            System.out.printf("Не нашёлся файл для считывания сотрудников.%nСоздаём новый файл со случайными сотрудниками%n");
             int employeeCount = 58 + random.nextInt(5);  // 58–62
             int developerCount = 28 + random.nextInt(5); // 28–32
             int managerCount = 10 + random.nextInt(3);
@@ -94,7 +93,7 @@ public class Main {
 
                     });
 
-
+            System.out.printf("Список успешно создан и записан.");
         }
 
 
