@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.*;
+
 public enum DayOfWeek {
     MONDAY("Понедельник"),
     TUESDAY("Вторник"),
@@ -17,5 +19,6 @@ public enum DayOfWeek {
 
     public String getTranslation(){
         return translation;
+
     }
 }
