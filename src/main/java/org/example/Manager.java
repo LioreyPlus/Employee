@@ -26,14 +26,5 @@ public class Manager extends Employee {
     void work() {
         System.out.printf("Привет! Я нахожусь на должности %s. Меня зовут %s и я получаю %d рублей%n", title.toLowerCase(), name, salary);
     }
-
-    void setRandomSalary() {
-        Random random = new Random();
-        this.salary = 80000 + random.nextInt(60000);
-    }
-    void setRandomTitle(){
-        Random random = new Random();
-        List<String> titles = Arrays.asList("менеджер по эфффективности", "супервайзер", "руководитель группы", "тимлид");
-        this.title = titles.get(random.nextInt(titles.size()));
-    }
+    public String getType() {return "Manager";}
 }

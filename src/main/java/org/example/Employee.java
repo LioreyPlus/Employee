@@ -24,8 +24,7 @@ public class Employee {
     Employee(String name) {
         this(name, 0, List.of(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY), "специалист");
     }
-    Employee(){
-    }
+    Employee(){}
 
     public String getName(){
         return this.name;
@@ -59,24 +58,8 @@ public class Employee {
         this.title = title;
     }
 
+    public String getType() {return "Employee";}
 
-
-    void setRandomSalary(){
-        Random random = new Random();
-        this.salary = 40000 + random.nextInt(50000);
-    }
-    void setRandomWeekend(){
-        Random random = new Random();
-        List<DayOfWeek> allDays = Arrays.asList(DayOfWeek.values());
-        Collections.shuffle(allDays);
-        this.weekend =  allDays.subList(0, random.nextInt(3) + 1);
-    }
-
-    void setRandomTitle(){
-        Random random = new Random();
-        List<String> titles = Arrays.asList("специалист", "лаборант", "старший специалист", "ведущий специалист", "эксперт");
-        this.title = titles.get(random.nextInt(titles.size()));
-    }
 
     boolean isWork(DayOfWeek dow) {
         if (weekend.contains(dow)) {
@@ -89,11 +72,7 @@ public class Employee {
 
     }
 
-
-
     void work() {
         System.out.println("Привет! Я работяга, меня зовут " + name + " и я живу на мою зпешечку в размере " + salary + " рублей");
     }
 }
-
-
