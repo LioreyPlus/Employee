@@ -7,18 +7,19 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String employeeListPath = "C:\\Users\\DeaDFlame\\Desktop\\Employee\\EmployeeList.csv";
+        String employeeListPath = "../EmployeeList.csv";
         List<Employee> employees = new ArrayList<>();
 
         try {
             employeeListRead(employeeListPath, employees);
         } catch (FileNotFoundException e) {
-            System.out.printf("Не нашёлся файл для считывания сотрудников.%nСоздаём новый файл со случайными сотрудниками.%n");
+            System.out.printf("We did't find a file for employees to read.%nCreating a new file with random employees.%n");
             employeeListCreate(employeeListPath, employees);
-            System.out.println("Файл успешно создан и записан в список.");
+            System.out.println("The file has been successfully created and added to the list.");
         }
 
         employees.forEach(Employee::work);
@@ -29,20 +30,17 @@ public class Main {
         Iterable<CSVRecord> workers = CSVFormat.RFC4180.parse(workersList);
 
         for (CSVRecord worker : workers) {
-            String name = worker.get(1);
-            int salary = Integer.parseInt(worker.get(2));
-            List<DayOfWeek> weekends = Arrays.stream(worker.get(3).split("\\s+"))
+            int id = Integer.parseInt(worker.get(0));
+            Role role = Role.valueOf(worker.get(1).toUpperCase(Locale.ROOT));
+            String name = worker.get(2);
+            int salary = Integer.parseInt(worker.get(3));
+            List<DayOfWeek> weekends = Arrays.stream(worker.get(4).split("\\s+"))
                     .map(String::toUpperCase)
                     .map(DayOfWeek::valueOf)
                     .toList();
-            String title = worker.get(4);
+            String title = worker.get(5);
+            employees.add(new Employee(id, name, salary, weekends, title, role));
 
-            switch (worker.get(0)) {
-                case "Employee" -> employees.add(new Employee(name, salary, weekends));
-                case "Manager" -> employees.add(new Manager(name, salary, weekends, title));
-                case "Developer" -> employees.add(new Developer(name, salary, weekends, title));
-                default -> System.out.println("Мы не смогли распознать сотрудника");
-            }
         }
         workersList.close();
     }
@@ -53,23 +51,21 @@ public class Main {
         int developerCount = 27 + random.nextInt(5); // 27–31
         int managerCount = 100 - employeeCount - developerCount; // 8 - 16
 
-        generateEmployees(employees, employeeCount, "Employee");
-        generateEmployees(employees, developerCount, "Developer");
-        generateEmployees(employees, managerCount, "Manager");
+        generateEmployees(employees, employeeCount, Role.EMPLOYEE);
+        generateEmployees(employees, developerCount, Role.DEVELOPER);
+        generateEmployees(employees, managerCount, Role.MANAGER);
 
         employeeCSVBuild(employeeListPath, employees);
 
     }
 
-    private static void generateEmployees(List<Employee> employees, int count, String employeeType) {
+    private static void generateEmployees(List<Employee> employees, int count, Role role) {
         for (int i = 0; i < count; i++) {
+            int id = generateUniqueId(employees);
             String name = new Faker().name().fullName();
             Employee employee;
-            switch (employeeType) {
-                case "Manager" -> employee = new Manager(name);
-                case "Developer" -> employee = new Developer(name);
-                default -> employee = new Employee(name);
-            }
+            employee = new Employee(id, name);
+            employee.setRole(role);
             setRandomSalary(employee);
             setRandomWeekend(employee);
             setRandomTitle(employee);
@@ -85,16 +81,15 @@ public class Main {
 
         employees
                 .forEach(employee -> {
-                    String type = employee.getType();
-                    String name = employee.getName();
-                    String salary = Integer.toString(employee.getSalary());
-                    String weekends = employee.getWeekend().toString();
-                    String weekendsForReader = weekends
+                    String role = employee.getRole().toString()
                             .replaceAll("[\\[\\],]", "")
                             .trim();
-                    String title = employee.getTitle();
+                    String salary = Integer.toString(employee.getSalary());
+                    String weekends = employee.getWeekend().toString()
+                            .replaceAll("[\\[\\],]", "")
+                            .trim();
                     try {
-                        printer.printRecord(type, name, salary, weekendsForReader, title);
+                        printer.printRecord(employee.getId(), role, employee.getName(), salary, weekends, employee.getTitle());
                         printer.flush();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
@@ -102,12 +97,20 @@ public class Main {
                 });
     }
 
+    private static int generateUniqueId(List<Employee> employees) {
+        return employees.stream()
+                .mapToInt(Employee::getId)
+                .max()
+                .orElse(0) + 1;
+    }
+
     private static void setRandomSalary(Employee employee) {
         Random random = new Random();
-        switch (employee.getType()) {
 
-            case "Developer" -> employee.setSalary(120000 + random.nextInt(200000));
-            case "Manager" -> employee.setSalary(80000 + random.nextInt(60000));
+        switch (employee.getRole()) {
+
+            case Role.DEVELOPER -> employee.setSalary(120000 + random.nextInt(200000));
+            case Role.MANAGER -> employee.setSalary(80000 + random.nextInt(60000));
             default -> employee.setSalary(40000 + random.nextInt(50000));
         }
     }
@@ -121,18 +124,18 @@ public class Main {
 
     private static void setRandomTitle(Employee employee) {
         Random random = new Random();
-        switch (employee.getType()) {
+        switch (employee.getRole()) {
 
-            case "Developer" -> {
-                List<String> titles = Arrays.asList("джун", "мидл", "сеньор");
+            case Role.DEVELOPER -> {
+                List<String> titles = Arrays.asList("junior", "middle", "senior");
                 employee.setTitle(titles.get(random.nextInt(titles.size())));
             }
-            case "Manager" -> {
-                List<String> titles = Arrays.asList("менеджер по эфффективности", "супервайзер", "руководитель группы", "тимлид");
+            case Role.MANAGER -> {
+                List<String> titles = Arrays.asList("efficiency manager", "supervisor", "group leader", "team leader");
                 employee.setTitle(titles.get(random.nextInt(titles.size())));
             }
             default -> {
-                List<String> titles = Arrays.asList("специалист", "лаборант", "старший специалист", "ведущий специалист", "эксперт");
+                List<String> titles = Arrays.asList("specialist", "laboratory assistant", "senior specialist", "leading specialist", "expert");
                 employee.setTitle(titles.get(random.nextInt(titles.size())));
             }
 
