@@ -9,30 +9,33 @@ public class Employee {
     private List<DayOfWeek> weekend;
     private String title;
     private Role role;
+    private Employee chief;
 
 
-    Employee(int id,String name, int salary, List<DayOfWeek> weekend, String title, Role role) {
+    Employee(int id, String name, int salary, List<DayOfWeek> weekend, String title, Role role, Employee chief) {
         this.id = id;
         this.name = name;
         this.salary = salary;
         this.weekend = weekend;
         this.title = title;
         this.role = role;
+        this.chief = chief;
     }
-    Employee(int id, String name){
-        this(id, name, 0, List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY), "специалист", Role.EMPLOYEE);
+
+    Employee(int id, String name) {
+        this(id, name, 0, List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY), "специалист", Role.EMPLOYEE, null);
     }
 
     Employee(String name, int salary, List<DayOfWeek> weekend) {
-        this(0, name, salary, weekend, "cпециалист", Role.EMPLOYEE);
+        this(0, name, salary, weekend, "cпециалист", Role.EMPLOYEE, null);
     }
 
     Employee(String name, int salary) {
-        this(0, name, salary, List.of(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY), "cпециалист", Role.EMPLOYEE);
+        this(0, name, salary, List.of(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY), "cпециалист", Role.EMPLOYEE, null);
     }
 
     Employee(String name) {
-        this(0, name, 0, List.of(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY), "специалист", Role.EMPLOYEE);
+        this(0, name, 0, List.of(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY), "специалист", Role.EMPLOYEE, null);
     }
 
     public String getName() {
@@ -67,19 +70,17 @@ public class Employee {
         this.title = title;
     }
 
-    public Role getRole(){
-        return this.role;
-    }
-    public void setRole(Role role){
-        this.role = role;
-    }
-    public int getId(){
-        return this.id;
-    }
-    public void setId(int id){
-        this.id = id;
-    }
+    public Role getRole() { return this.role; }
 
+    public void setRole(Role role) { this.role = role; }
+
+    public int getId() { return id;}
+
+    public void setId(int id) { this.id = id; }
+
+    public Employee getChief() { return this.chief; }
+
+    public void setChief(Employee chief) { this.chief = chief; }
 
     boolean isWork(DayOfWeek dow) {
         if (weekend.contains(dow)) {
