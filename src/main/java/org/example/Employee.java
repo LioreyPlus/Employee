@@ -1,41 +1,48 @@
 package org.example;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Employee {
     private int id;
     private String name;
     private int salary;
-    private List<DayOfWeek> weekend;
+    private String scheduleType;
+    private List<Integer> schedule;
     private String title;
     private Role role;
     private Employee chief;
 
 
-    Employee(int id, String name, int salary, List<DayOfWeek> weekend, String title, Role role, Employee chief) {
+    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<Integer> schedule) {
         this.id = id;
         this.name = name;
         this.salary = salary;
-        this.weekend = weekend;
+        this.scheduleType = scheduleType;
         this.title = title;
         this.role = role;
         this.chief = chief;
+        this.schedule = schedule;
+    }
+
+    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief) {
+        this(id, name, salary, scheduleType, title, role, chief, null);
     }
 
     Employee(int id, String name) {
-        this(id, name, 0, List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY), "специалист", Role.EMPLOYEE, null);
+        this(id, name, 0, "5/2", "specialist", Role.EMPLOYEE, null);
     }
 
-    Employee(String name, int salary, List<DayOfWeek> weekend) {
-        this(0, name, salary, weekend, "cпециалист", Role.EMPLOYEE, null);
+    Employee(String name, int salary, String scheduleType) {
+        this(0, name, salary, scheduleType, "specialist", Role.EMPLOYEE, null);
     }
 
     Employee(String name, int salary) {
-        this(0, name, salary, List.of(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY), "cпециалист", Role.EMPLOYEE, null);
+        this(0, name, salary, "5/2", "specialist", Role.EMPLOYEE, null);
     }
 
     Employee(String name) {
-        this(0, name, 0, List.of(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY), "специалист", Role.EMPLOYEE, null);
+        this(0, name, 0, "5/2", "specialist", Role.EMPLOYEE, null);
     }
 
     public String getName() {
@@ -52,14 +59,6 @@ public class Employee {
 
     public void setSalary(int salary) {
         this.salary = salary;
-    }
-
-    public List<DayOfWeek> getWeekend() {
-        return this.weekend;
-    }
-
-    public void setWeekend(List<DayOfWeek> weekend) {
-        this.weekend = weekend;
     }
 
     public String getTitle() {
@@ -82,18 +81,22 @@ public class Employee {
 
     public void setChief(Employee chief) { this.chief = chief; }
 
-    boolean isWork(DayOfWeek dow) {
-        if (weekend.contains(dow)) {
-            System.out.printf("%s не работает сегодня%n", name);
-            return false;
-        } else {
-            System.out.printf("%s сегодня работает. Ура!%n", name);
-            return true;
-        }
+    public List<Integer> getSchedule() {return this.schedule;}
 
-    }
+    public void setSchedule(List<Integer> schedule) { this.schedule = schedule;}
+
+    public String getScheduleType() {return  this.scheduleType;}
+
+    public void setScheduleType(String scheduleType) {this.scheduleType = scheduleType;}
+
+
 
     void work() {
-        role.work(name, title, salary);
+        int todayDayOfMonth = LocalDate.now().getDayOfMonth();
+        if (schedule.contains(todayDayOfMonth)) {
+            role.work(name, title, salary);
+        }else {
+            System.out.printf("%s doesn't work today%n", name);
+        }
     }
 }
