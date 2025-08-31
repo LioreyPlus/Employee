@@ -8,13 +8,13 @@ public class Employee {
     private String name;
     private int salary;
     private String scheduleType;
-    private List<Integer> schedule;
+    private List<LocalDate> schedule;
     private String title;
     private Role role;
     private Employee chief;
 
 
-    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<Integer> schedule) {
+    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<LocalDate> schedule) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -81,9 +81,9 @@ public class Employee {
 
     public void setChief(Employee chief) { this.chief = chief; }
 
-    public List<Integer> getSchedule() {return this.schedule;}
+    public List<LocalDate> getSchedule() {return this.schedule;}
 
-    public void setSchedule(List<Integer> schedule) { this.schedule = schedule;}
+    public void setSchedule(List<LocalDate> schedule) { this.schedule = schedule;}
 
     public String getScheduleType() {return  this.scheduleType;}
 
@@ -91,9 +91,8 @@ public class Employee {
 
 
 
-    void work() {
-        int todayDayOfMonth = LocalDate.now().getDayOfMonth();
-        if (schedule.contains(todayDayOfMonth)) {
+    public void work() {
+        if (schedule.contains(LocalDate.now())) {
             role.work(name, title, salary);
         }else {
             System.out.printf("%s doesn't work today%n", name);
