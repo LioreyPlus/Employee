@@ -19,7 +19,6 @@ public class EmployeeGenerator {
         generateEmployees(employees, developerCount, Role.DEVELOPER);
         generateEmployees(employees, employeeCount, Role.EMPLOYEE);
 
-        // Вызываем метод из Main класса для построения CSV
         EmployeeFileManager.employeeCSVBuild(employeeListPath, employees);
     }
 
