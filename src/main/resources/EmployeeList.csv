@@ -1,0 +1,101 @@
+ID,Role,name,salary,scheduleType,title,chief
+1,DIRECTOR,Alex Howell,439622,5/2,CEO," "
+2,MANAGER,Trey Runolfsson,135997,5/2,team leader,1
+3,MANAGER,Theo Cole,116442,5/2,team leader,1
+4,MANAGER,Daniell Kuhn MD,84833,5/2,supervisor,1
+5,MANAGER,Patria Sipes,110715,5/2,group leader,1
+6,MANAGER,Dewitt Kautzer,117031,5/2,team leader,1
+7,MANAGER,Chi Nitzsche,134474,5/2,group leader,1
+8,MANAGER,Lorine Haley,138097,5/2,group leader,1
+9,DEVELOPER,Laurice Haag,285480,5/2,middle,7
+10,DEVELOPER,Basil Jakubowski,193714,5/2,junior,4
+11,DEVELOPER,Ja Haley,166686,5/2,senior,3
+12,DEVELOPER,Carol Willms,140670,5/2,senior,2
+13,DEVELOPER,Wilber Russel,223609,5/2,junior,2
+14,DEVELOPER,Kayleen McCullough PhD,237144,5/2,middle,3
+15,DEVELOPER,Kesha Morar,131669,5/2,senior,7
+16,DEVELOPER,Alecia Ankunding,222212,5/2,senior,7
+17,DEVELOPER,Venice Langosh,298278,5/2,junior,8
+18,DEVELOPER,Mrs. Christin Koch,120343,5/2,junior,8
+19,DEVELOPER,Weldon Carroll,302400,5/2,junior,6
+20,DEVELOPER,Efrain McCullough,245810,5/2,junior,7
+21,DEVELOPER,Ms. Berniece Kreiger,181553,5/2,senior,4
+22,DEVELOPER,Grant Hand,147741,5/2,middle,3
+23,DEVELOPER,Malcom Reichel,145005,5/2,junior,6
+24,DEVELOPER,Ray Emmerich,175575,5/2,junior,5
+25,DEVELOPER,Robena Farrell,168001,5/2,senior,4
+26,DEVELOPER,Marvin Crist I,242393,5/2,senior,8
+27,DEVELOPER,Chad Fisher,238065,5/2,middle,4
+28,DEVELOPER,Lyle Douglas IV,129552,5/2,middle,6
+29,DEVELOPER,Ara Parisian,270396,5/2,senior,7
+30,DEVELOPER,Mrs. Marianne Littel,169595,5/2,junior,7
+31,DEVELOPER,Mrs. Ivelisse Luettgen,180584,5/2,junior,5
+32,DEVELOPER,Jeffrey Bogisich,188283,5/2,junior,3
+33,DEVELOPER,Benny Runolfsdottir,169133,5/2,senior,3
+34,DEVELOPER,George Huels,245489,5/2,middle,7
+35,DEVELOPER,Myrl Hudson,286919,5/2,senior,6
+36,DEVELOPER,Billie Quitzon,140978,5/2,junior,8
+37,DEVELOPER,Augustus Abernathy,212083,5/2,junior,6
+38,DEVELOPER,Ty Zemlak,165332,5/2,junior,3
+39,DEVELOPER,Raeann Nienow,240917,5/2,junior,7
+40,EMPLOYEE,Johnathan O'Reilly,82149,5/2,leading specialist,5
+41,EMPLOYEE,Dolly Frami,71350,2/2,laboratory assistant,4
+42,EMPLOYEE,Asa Ortiz,59256,5/2,senior specialist,8
+43,EMPLOYEE,Thaddeus Weimann,82577,5/2,leading specialist,5
+44,EMPLOYEE,Aron Herman,84378,5/2,expert,8
+45,EMPLOYEE,Malika Hermiston,42115,5/2,laboratory assistant,3
+46,EMPLOYEE,Patrick Cronin,57377,5/2,specialist,3
+47,EMPLOYEE,Augustina Huels,54895,5/2,senior specialist,4
+48,EMPLOYEE,Delmy Steuber,60034,2/2,laboratory assistant,4
+49,EMPLOYEE,Camellia Donnelly,41743,5/2,laboratory assistant,7
+50,EMPLOYEE,Hector Powlowski,41009,2/2,expert,7
+51,EMPLOYEE,Dena Brown,76538,2/2,expert,4
+52,EMPLOYEE,Albert Breitenberg DDS,78558,2/2,senior specialist,4
+53,EMPLOYEE,Kaylene Jacobs,41028,2/2,senior specialist,3
+54,EMPLOYEE,Ms. Ludie Grady,71250,2/2,specialist,4
+55,EMPLOYEE,Hal Ward IV,78222,2/2,leading specialist,2
+56,EMPLOYEE,Miss Maura Stokes,83182,5/2,senior specialist,2
+57,EMPLOYEE,Hans Kunde,75710,2/2,specialist,8
+58,EMPLOYEE,Tessa Jakubowski,51489,5/2,laboratory assistant,2
+59,EMPLOYEE,Leonel Auer,56588,2/2,leading specialist,8
+60,EMPLOYEE,Ramon Heidenreich,45332,2/2,senior specialist,3
+61,EMPLOYEE,Rosaura Monahan,56821,5/2,laboratory assistant,3
+62,EMPLOYEE,Francis Kihn,67995,2/2,laboratory assistant,6
+63,EMPLOYEE,Marg Ondricka,58995,5/2,specialist,7
+64,EMPLOYEE,Ginger Dooley,68287,5/2,leading specialist,7
+65,EMPLOYEE,Miss Lisbeth Lebsack,45234,5/2,laboratory assistant,3
+66,EMPLOYEE,Morton Rolfson,64790,5/2,specialist,5
+67,EMPLOYEE,Ms. Rosaline Hermiston,55312,5/2,leading specialist,8
+68,EMPLOYEE,Anderson Leuschke,63613,5/2,laboratory assistant,3
+69,EMPLOYEE,Deangelo Waters,85019,2/2,expert,5
+70,EMPLOYEE,Sanora Gutkowski,70936,5/2,leading specialist,5
+71,EMPLOYEE,Collette Skiles II,62556,5/2,senior specialist,7
+72,EMPLOYEE,Lawrence Pacocha,43034,2/2,expert,5
+73,EMPLOYEE,Miss Tiesha Hoeger,70076,5/2,leading specialist,5
+74,EMPLOYEE,Heidy Zieme,45685,2/2,senior specialist,7
+75,EMPLOYEE,Dr. Marlin Kuhlman,46545,2/2,specialist,6
+76,EMPLOYEE,Jeane Mayert,54763,2/2,senior specialist,2
+77,EMPLOYEE,Federico Osinski,50460,5/2,leading specialist,6
+78,EMPLOYEE,Rodney Douglas,74524,5/2,specialist,6
+79,EMPLOYEE,Ardis Rolfson,70770,2/2,laboratory assistant,7
+80,EMPLOYEE,Thanh Mraz,41390,2/2,specialist,8
+81,EMPLOYEE,Terry Torphy,85680,2/2,laboratory assistant,6
+82,EMPLOYEE,Brain Robel,85765,2/2,leading specialist,6
+83,EMPLOYEE,Dallas Mayer,57663,2/2,senior specialist,7
+84,EMPLOYEE,Harlan Russel MD,83488,5/2,laboratory assistant,2
+85,EMPLOYEE,Miss Minerva Lind,61391,5/2,laboratory assistant,7
+86,EMPLOYEE,Chung Ortiz,80300,5/2,expert,5
+87,EMPLOYEE,Karyn Leffler,76044,5/2,senior specialist,4
+88,EMPLOYEE,Miss Hettie Kutch,70944,5/2,expert,5
+89,EMPLOYEE,Milo Schaden,74966,2/2,laboratory assistant,7
+90,EMPLOYEE,Mellisa Cormier,75991,5/2,leading specialist,2
+91,EMPLOYEE,Octavio Predovic,86954,2/2,leading specialist,6
+92,EMPLOYEE,Isidra Lebsack,84498,2/2,specialist,4
+93,EMPLOYEE,Renita Littel,48798,5/2,expert,8
+94,EMPLOYEE,Mr. Brooks Harber,84740,2/2,leading specialist,7
+95,EMPLOYEE,Alphonse Effertz II,73951,5/2,specialist,3
+96,EMPLOYEE,Shad Feest MD,49628,5/2,specialist,3
+97,EMPLOYEE,Emery Wyman,70940,5/2,specialist,4
+98,EMPLOYEE,Rico Smith,74960,5/2,leading specialist,6
+99,EMPLOYEE,Oliver Bogisich,79082,2/2,laboratory assistant,7
+100,EMPLOYEE,Genny O'Connell,47084,2/2,specialist,2
