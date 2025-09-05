@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -16,22 +17,29 @@ import java.time.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String employeeListPath = "../EmployeeList.csv";
-        String scheduleListPath = "../schedule.csv";
+        String scheduleListPath = "src/main/resources/schedule.scv";
         List<Employee> employees = new ArrayList<>();
         Map<Integer, List<LocalDate>> employeesSchedule = new HashMap<>();
 
 
-        File employeeListFile = new File(employeeListPath);
-        if (!employeeListFile.exists()) {
-            System.out.printf("We didn't find a file for employees to read.%nCreating a new file with random employees.%n");
-            EmployeeGenerator.generateEmployeeList(employeeListPath, employees);
-            System.out.println("The file has been successfully created and added to the list.");
-        }
         try {
-            EmployeeFileManager.employeeListRead(employeeListPath, employees);
-        } catch (IOException e) {
-            System.out.println("Error reading employee's list file: " + e.getMessage());
+            EmployeeDataBaseManager.initiazlizeDatabase();
+
+            if (!EmployeeDataBaseManager.hasEmployees()) {
+                System.out.println("No employees found in database. Creating new employees with random data...");
+
+                EmployeeGenerator.generateRandomEmployees(employees, 100);
+                EmployeeDataBaseManager.saveEmployees(employees);
+                System.out.println("Successfully created and saved " + employees.size() + " employees to database.");
+            } else {
+                System.out.println("Reading employees from database.");
+                employees = EmployeeDataBaseManager.readAllEmployees();
+                System.out.println("Successfully loaded " + employees.size() + " employees from database.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error during employee operations: " + e.getMessage());
+            e.printStackTrace();
+            return;
         }
 
         ScheduleFileManager.ensureScheduleFileExists(scheduleListPath, employees, employeesSchedule);
