@@ -57,6 +57,31 @@ public class EmployeeQueryManager {
         return employees;
     }
 
+    public static Map<String, Integer> getBranchesWithEmployeeCount() throws SQLException {
+        Map<String, Integer> branchStats = new HashMap<>();
+        String query = """
+        SELECT 
+            b.name AS branch_name,
+            COUNT(e.branch_id) AS employee_count
+        FROM branches b
+        LEFT JOIN employees e ON b.id = e.branch_id
+        GROUP BY b.id, b.name
+        ORDER BY employee_count DESC
+        """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String branchName = rs.getString("branch_name");
+                int employeeCount = rs.getInt("employee_count");
+                branchStats.put(branchName, employeeCount);
+            }
+        }
+        return branchStats;
+    }
+
     private static Employee resultSetToEmployee(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");

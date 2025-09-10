@@ -23,7 +23,14 @@ public enum Role {
             System.out.printf("Hi! My name is %s. I am in the position of %s and I earn %d rubles%n", name, title.toLowerCase(), salary);
         }
     },
-    DIRECTOR(Arrays.asList("CEO")) {
+
+    BRANCH_MANAGER(List.of("Branch Manager")) {
+        @Override
+        public void work(String name, String title, int salary) {
+            System.out.println("Hi! Sosal?");
+        }
+    },
+    DIRECTOR(List.of("CEO")) {
         @Override
         public void work(String name, String title, int salary) {
             System.out.printf("Sup! My name is %s, and I hold the position of %s. Everyone get to work!%n", name, title);
@@ -50,17 +57,19 @@ public enum Role {
     public int generateRandomSalary() {
         Random random = new Random();
         return switch (this) {
+            case BRANCH_MANAGER -> 200000 + random.nextInt(200000); // 150k-250k
             case DEVELOPER -> 120000 + random.nextInt(200000);
             case MANAGER -> 80000 + random.nextInt(60000);
-            case DIRECTOR -> 300000 + random.nextInt(200000);
-            default -> 40000 + random.nextInt(50000); // Для EMPLOYEE и других ролей
+            case DIRECTOR -> 400000 + random.nextInt(200000);
+            default -> 40000 + random.nextInt(50000);
         };
     }
 
     public Role getRequiredChiefRole() {
         return switch (this) {
             case EMPLOYEE, DEVELOPER -> Role.MANAGER;
-            case MANAGER -> Role.DIRECTOR;
+            case MANAGER -> Role.BRANCH_MANAGER;
+            case BRANCH_MANAGER -> Role.DIRECTOR;
             case DIRECTOR -> null;
         };
     }
@@ -68,7 +77,7 @@ public enum Role {
     public String getScheduleType() {
         Random random = new Random();
         return switch (this) {
-            case DIRECTOR, MANAGER, DEVELOPER -> "5/2";
+            case DIRECTOR, BRANCH_MANAGER, MANAGER, DEVELOPER -> "5/2";
             case EMPLOYEE -> random.nextBoolean() ? "5/2" : "2/2";
         };
     }

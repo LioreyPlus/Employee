@@ -6,14 +6,17 @@ import java.util.Random;
 
 public class EmployeeGenerator {
 
-    public static void generateRandomEmployees(List<Employee> employees, int count) {
-        // Сохраняем вашу оригинальную логику распределения ролей
-        int employeeCount = 57 + new Random().nextInt(5);  // 57–61
-        int developerCount = 27 + new Random().nextInt(5); // 27–31
-        int managerCount = count - employeeCount - developerCount - 1; // Оставшиеся для менеджеров
+    public static void generateRandomEmployeesByBranches(List<Employee> employees, List<Branch> branches, int count) {
 
-        // Генерируем сотрудников в правильном порядке иерархии
+        int employeeCount = 57 + new Random().nextInt(5);
+        int developerCount = 27 + new Random().nextInt(5);
+        int branchManagerCount = count / 50;
+        int managerCount = count - employeeCount - developerCount - 1 - branchManagerCount;
+
+        branches.addAll(BranchGenerator.createRandomBranches(branchManagerCount));
+
         generateEmployees(employees, 1, Role.DIRECTOR);
+        generateEmployees(employees, branchManagerCount, Role.BRANCH_MANAGER);
         generateEmployees(employees, managerCount, Role.MANAGER);
         generateEmployees(employees, developerCount, Role.DEVELOPER);
         generateEmployees(employees, employeeCount, Role.EMPLOYEE);
@@ -42,6 +45,7 @@ public class EmployeeGenerator {
             employee.setSalary(role.generateRandomSalary());
             employee.setScheduleType(role.getScheduleType());
             employee.setTitle(role.getRandomTitle());
+            employee.setBranchId(setCorrectBranchId(employee));
 
             employees.add(employee);
         }
@@ -52,5 +56,13 @@ public class EmployeeGenerator {
                 .mapToInt(Employee::getId)
                 .max()
                 .orElse(0) + 1;
+    }
+
+    private static int setCorrectBranchId(Employee employee) {
+        switch (employee.getRole()) {
+            case BRANCH_MANAGER -> {return employee.getId() - 1;}
+            case MANAGER, EMPLOYEE, DEVELOPER -> {return employee.getChief().getBranchId();}
+            default -> {return 0;}
+            }
     }
 }

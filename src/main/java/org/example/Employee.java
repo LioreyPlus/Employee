@@ -12,9 +12,10 @@ public class Employee {
     private String title;
     private Role role;
     private Employee chief;
+    private int branch_id;
 
 
-    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<LocalDate> schedule) {
+    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<LocalDate> schedule, int branch_id) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -23,26 +24,27 @@ public class Employee {
         this.role = role;
         this.chief = chief;
         this.schedule = schedule;
+        this.branch_id = branch_id;
     }
 
     Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief) {
-        this(id, name, salary, scheduleType, title, role, chief, null);
+        this(id, name, salary, scheduleType, title, role, chief, null, 0);
     }
 
     Employee(int id, String name) {
-        this(id, name, 0, "5/2", "specialist", Role.EMPLOYEE, null);
+        this(id, name, 0, "5/2", "specialist", Role.EMPLOYEE, null, null,0);
     }
 
     Employee(String name, int salary, String scheduleType) {
-        this(0, name, salary, scheduleType, "specialist", Role.EMPLOYEE, null);
+        this(0, name, salary, scheduleType, "specialist", Role.EMPLOYEE, null, null, 1);
     }
 
     Employee(String name, int salary) {
-        this(0, name, salary, "5/2", "specialist", Role.EMPLOYEE, null);
+        this(0, name, salary, "5/2", "specialist", Role.EMPLOYEE, null,null, 0);
     }
 
     Employee(String name) {
-        this(0, name, 0, "5/2", "specialist", Role.EMPLOYEE, null);
+        this(0, name, 0, "5/2", "specialist", Role.EMPLOYEE, null,null, 0);
     }
 
     public String getName() {
@@ -88,6 +90,10 @@ public class Employee {
     public String getScheduleType() {return  this.scheduleType;}
 
     public void setScheduleType(String scheduleType) {this.scheduleType = scheduleType;}
+
+    public int getBranchId() {return this.branch_id;}
+
+    public void setBranchId(int branch_id) {this.branch_id = branch_id;}
 
 
 

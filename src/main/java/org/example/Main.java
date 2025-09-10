@@ -1,35 +1,29 @@
 package org.example;
 
-import com.github.javafaker.Faker;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
-
 import java.io.*;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
 import java.util.*;
 
-import java.time.*;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String scheduleListPath = "src/main/resources/schedule.scv";
+        String scheduleListPath = "src/main/resources/schedule.csv";
         List<Employee> employees = new ArrayList<>();
+        List<Branch> branches = new ArrayList<>();
         Map<Integer, List<LocalDate>> employeesSchedule = new HashMap<>();
 
 
         try {
-            EmployeeDataBaseManager.initiazlizeDatabase();
+            EmployeeDataBaseManager.initializeDatabase();
 
             if (!EmployeeDataBaseManager.hasEmployees()) {
                 System.out.println("No employees found in database. Creating new employees with random data...");
 
-                EmployeeGenerator.generateRandomEmployees(employees, 100);
+                EmployeeGenerator.generateRandomEmployeesByBranches(employees, branches, 100);
                 EmployeeDataBaseManager.saveEmployees(employees);
+                EmployeeDataBaseManager.saveBranches(branches);
                 System.out.println("Successfully created and saved " + employees.size() + " employees to database.");
             } else {
                 System.out.println("Reading employees from database.");
@@ -50,6 +44,18 @@ public class Main {
         }
         ScheduleManager.employeesScheduleSet(employees, employeesSchedule);
         employees.forEach(Employee::work);
+
+        try {
+            Map<String, Integer> stats = EmployeeQueryManager.getBranchesWithEmployeeCount();
+
+            System.out.println("Stats by branches:");
+            for (Map.Entry<String, Integer> entry : stats.entrySet()) {
+                System.out.printf("Branch: %s, Employees: %d%n",
+                        entry.getKey(), entry.getValue());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
