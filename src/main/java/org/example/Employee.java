@@ -12,10 +12,10 @@ public class Employee {
     private String title;
     private Role role;
     private Employee chief;
-    private int branch_id;
+    private int branchId;
 
 
-    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<LocalDate> schedule, int branch_id) {
+    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<LocalDate> schedule, int branchId) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -24,7 +24,7 @@ public class Employee {
         this.role = role;
         this.chief = chief;
         this.schedule = schedule;
-        this.branch_id = branch_id;
+        this.branchId = branchId;
     }
 
     Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief) {
@@ -91,9 +91,9 @@ public class Employee {
 
     public void setScheduleType(String scheduleType) {this.scheduleType = scheduleType;}
 
-    public int getBranchId() {return this.branch_id;}
+    public int getBranchId() {return this.branchId;}
 
-    public void setBranchId(int branch_id) {this.branch_id = branch_id;}
+    public void setBranchId(int branch_id) {this.branchId = branch_id;}
 
 
 

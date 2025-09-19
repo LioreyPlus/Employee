@@ -18,15 +18,6 @@ public class EmployeeDataBaseManager {
         try (Connection con = DriverManager.getConnection(DB_URL);
              Statement stmt = con.createStatement()) {
 
-            String createBranchesTable = """
-                    CREATE TABLE IF NOT EXISTS branches (
-                           id INTEGER PRIMARY KEY,
-                           name TEXT NOT NULL,
-                           address TEXT NOT NULL,
-                           manager_id INTEGER,
-                           FOREIGN KEY (manager_id) REFERENCES employees (id)
-                           )
-                    """;
 
             String createEmployeesTable = """
                     CREATE TABLE IF NOT EXISTS employees (
@@ -42,8 +33,38 @@ public class EmployeeDataBaseManager {
                           FOREIGN KEY (branch_id) REFERENCES branches (id)
                           )
                     """;
+
+            String createBranchesTable = """
+                    CREATE TABLE IF NOT EXISTS branches (
+                           id INTEGER PRIMARY KEY,
+                           name TEXT NOT NULL,
+                           address TEXT NOT NULL,
+                           manager_id INTEGER,
+                           FOREIGN KEY (manager_id) REFERENCES employees (id)
+                           )
+                    """;
+
+            String createProjectsTable = """
+                    CREATE TABLE IF NOT EXISTS projects (
+                           id INTEGER PRIMARY KEY,
+                           name TEXT NOT NULL
+                           )
+                    """;
+
+            String createEmployeesProjectTable = """
+                    CREATE TABLE IF NOT EXISTS employee_projects (
+                        employee_id INT,
+                        project_id INT,
+                        PRIMARY KEY (employee_id, project_id),
+                        FOREIGN KEY (employee_id) REFERENCES employees(id),
+                        FOREIGN KEY (project_id) REFERENCES projects(id)
+                        )
+                    """;
+
             stmt.execute(createBranchesTable);
             stmt.execute(createEmployeesTable);
+            stmt.execute(createProjectsTable);
+            stmt.execute(createEmployeesProjectTable);
         }
     }
 
@@ -141,7 +162,7 @@ public class EmployeeDataBaseManager {
                     pstmt.setInt(1, branch.getId());
                     pstmt.setString(2, branch.getName());
                     pstmt.setString(3, branch.getAddress());
-                    pstmt.setInt(4, branch.getManager_id());
+                    pstmt.setInt(4, branch.getManagerId());
 
                     pstmt.addBatch();
                 }
@@ -149,4 +170,48 @@ public class EmployeeDataBaseManager {
                 pstmt.executeBatch();
             }
         }
+
+    public static void saveProjects(List<Project> projects) throws SQLException {
+        String query = """
+            INSERT OR REPLACE INTO projects (id, name)
+            VALUES (?, ?)
+        """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            for (Project project : projects) {
+                pstmt.setInt(1, project.getId());
+                pstmt.setString(2, project.getName());
+
+                pstmt.addBatch();
+            }
+
+            pstmt.executeBatch();
+        }
     }
+
+    public static void saveEmployeeProjects(Map<Integer, List<Integer>> assignment) throws SQLException {
+        String query = """
+        INSERT OR REPLACE INTO employee_projects (employee_id, project_id)
+        VALUES (?, ?)
+    """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            for (Map.Entry<Integer, List<Integer>> entry : assignment.entrySet()) {
+                int employeeId = entry.getKey();
+                List<Integer> projectIds = entry.getValue();
+
+                for (int projectId : projectIds) {
+                    pstmt.setInt(1, employeeId);
+                    pstmt.setInt(2, projectId);
+                    pstmt.addBatch();
+                }
+            }
+
+            pstmt.executeBatch();
+        }
+    }
+}

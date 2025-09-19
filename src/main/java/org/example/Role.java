@@ -27,7 +27,7 @@ public enum Role {
     BRANCH_MANAGER(List.of("Branch Manager")) {
         @Override
         public void work(String name, String title, int salary) {
-            System.out.println("Hi! Sosal?");
+            System.out.println("Hi! I'm manager of this branch");
         }
     },
     DIRECTOR(List.of("CEO")) {
