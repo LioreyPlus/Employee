@@ -1,13 +1,19 @@
 package org.example;
 
 import com.github.javafaker.Faker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+@Component
 public class BranchGenerator {
-    private static final Faker faker = new Faker();
-    private static final Random random = new Random();
+    private final Faker faker;
+    private final Random random;
+
     private static int lastId = 0;
     private static int managerCounter = 2;
 
@@ -26,7 +32,12 @@ public class BranchGenerator {
     };
 
 
-    public static Branch createRandomBranch() {
+    public BranchGenerator(Faker faker, Random random) {
+        this.faker = faker;
+        this.random = random;
+    }
+
+    public Branch createRandomBranch() {
         int id = ++lastId;
         String name = generateBranchName();
         String address = faker.address().fullAddress();
@@ -36,7 +47,7 @@ public class BranchGenerator {
     }
 
 
-    public static List<Branch> createRandomBranches(int count) {
+    public List<Branch> createRandomBranches(int count) {
         List<Branch> branches = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
@@ -47,7 +58,7 @@ public class BranchGenerator {
     }
 
 
-    private static String generateBranchName() {
+    private String generateBranchName() {
         String prefix = BRANCH_NAMES[random.nextInt(BRANCH_NAMES.length)];
         String suffix = BRANCH_TYPES[random.nextInt(BRANCH_TYPES.length)];
 

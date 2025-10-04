@@ -1,19 +1,34 @@
 package org.example;
 
 import com.github.javafaker.Faker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Random;
 
+@Component
 public class EmployeeGenerator {
 
-    public static void generateRandomEmployeesByBranches(List<Employee> employees, List<Branch> branches, int count) {
+    private final Faker faker;
+    private final Random random;
+    private final BranchGenerator branchGenerator;
+
+    @Autowired
+    public EmployeeGenerator(Faker faker, Random random, BranchGenerator branchGenerator) {
+        this.faker = faker;
+        this.random = random;
+        this.branchGenerator = branchGenerator;
+    }
+
+    public void generateRandomEmployeesByBranches(List<Employee> employees, List<Branch> branches, int count) {
 
         int employeeCount = 57 + new Random().nextInt(5);
         int developerCount = 27 + new Random().nextInt(5);
         int branchManagerCount = count / 50;
         int managerCount = count - employeeCount - developerCount - 1 - branchManagerCount;
 
-        branches.addAll(BranchGenerator.createRandomBranches(branchManagerCount));
+        branches.addAll(branchGenerator.createRandomBranches(branchManagerCount));
 
         generateEmployees(employees, 1, Role.DIRECTOR);
         generateEmployees(employees, branchManagerCount, Role.BRANCH_MANAGER);
@@ -22,7 +37,7 @@ public class EmployeeGenerator {
         generateEmployees(employees, employeeCount, Role.EMPLOYEE);
     }
 
-    private static void generateEmployees(List<Employee> employees, int count, Role role) {
+    private void generateEmployees(List<Employee> employees, int count, Role role) {
         List<Employee> potentialChiefs = employees.stream()
                 .filter(e -> e.getRole() == role.getRequiredChiefRole())
                 .toList();
@@ -51,14 +66,14 @@ public class EmployeeGenerator {
         }
     }
 
-    private static int generateUniqueId(List<Employee> employees) {
+    private int generateUniqueId(List<Employee> employees) {
         return employees.stream()
                 .mapToInt(Employee::getId)
                 .max()
                 .orElse(0) + 1;
     }
 
-    private static int setCorrectBranchId(Employee employee) {
+    private int setCorrectBranchId(Employee employee) {
         switch (employee.getRole()) {
             case BRANCH_MANAGER -> {return employee.getId() - 1;}
             case MANAGER, EMPLOYEE, DEVELOPER -> {return employee.getChief().getBranchId();}
