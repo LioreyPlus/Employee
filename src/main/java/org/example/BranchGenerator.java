@@ -1,7 +1,6 @@
 package org.example;
 
 import com.github.javafaker.Faker;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,8 +13,8 @@ public class BranchGenerator {
     private final Faker faker;
     private final Random random;
 
-    private static int lastId = 0;
-    private static int managerCounter = 2;
+    private int lastId = 0;
+    private int managerCounter = 2;
 
 
     private static final String[] BRANCH_NAMES = {

@@ -1,6 +1,6 @@
 package org.example;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -9,13 +9,18 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Component
-public class CompanyStarter {
+public class CompanyStarter implements CommandLineRunner {
 
     @Autowired
     private EmployeeGenerator employeeGenerator;
 
     @Autowired
     private BranchGenerator branchGenerator;
+
+    @Override
+    public void run(String... args) throws Exception {
+        startCompany();
+    }
 
     public void startCompany() throws IOException, SQLException {
         String scheduleListPath = "src/main/resources/schedule.csv";
@@ -93,7 +98,7 @@ public class CompanyStarter {
 
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка SQL: " + e.getMessage());
+            System.out.println("SQL Error: " + e.getMessage());
             e.printStackTrace();
         }
     }

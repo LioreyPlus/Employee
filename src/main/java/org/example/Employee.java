@@ -1,7 +1,7 @@
 package org.example;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
 
 public class Employee {
     private int id;
@@ -14,37 +14,82 @@ public class Employee {
     private Employee chief;
     private int branchId;
 
-
-    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief, List<LocalDate> schedule, int branchId) {
-        this.id = id;
-        this.name = name;
-        this.salary = salary;
-        this.scheduleType = scheduleType;
-        this.title = title;
-        this.role = role;
-        this.chief = chief;
-        this.schedule = schedule;
-        this.branchId = branchId;
+    // Приватный конструктор для Builder
+    private Employee(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.salary = builder.salary;
+        this.scheduleType = builder.scheduleType;
+        this.schedule = builder.schedule;
+        this.title = builder.title;
+        this.role = builder.role;
+        this.chief = builder.chief;
+        this.branchId = builder.branchId;
     }
 
-    Employee(int id, String name, int salary, String scheduleType, String title, Role role, Employee chief) {
-        this(id, name, salary, scheduleType, title, role, chief, null, 0);
+    public static Builder builder() {
+        return new Builder();
     }
 
-    Employee(int id, String name) {
-        this(id, name, 0, "5/2", "specialist", Role.EMPLOYEE, null, null,0);
-    }
+    public static class Builder {
+        private int id;
+        private String name;
+        private int salary;
+        private String scheduleType = "5/2"; // значение по умолчанию
+        private List<LocalDate> schedule;
+        private String title = "specialist"; // значение по умолчанию
+        private Role role = Role.EMPLOYEE;   // значение по умолчанию
+        private Employee chief;
+        private int branchId;
 
-    Employee(String name, int salary, String scheduleType) {
-        this(0, name, salary, scheduleType, "specialist", Role.EMPLOYEE, null, null, 1);
-    }
+        public Builder id(int id) {
+            this.id = id;
+            return this;
+        }
 
-    Employee(String name, int salary) {
-        this(0, name, salary, "5/2", "specialist", Role.EMPLOYEE, null,null, 0);
-    }
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
 
-    Employee(String name) {
-        this(0, name, 0, "5/2", "specialist", Role.EMPLOYEE, null,null, 0);
+        public Builder salary(int salary) {
+            this.salary = salary;
+            return this;
+        }
+
+        public Builder scheduleType(String scheduleType) {
+            this.scheduleType = scheduleType;
+            return this;
+        }
+
+        public Builder schedule(List<LocalDate> schedule) {
+            this.schedule = schedule;
+            return this;
+        }
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder role(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public Builder chief(Employee chief) {
+            this.chief = chief;
+            return this;
+        }
+
+        public Builder branchId(int branchId) {
+            this.branchId = branchId;
+            return this;
+        }
+
+        public Employee build() {
+            return new Employee(this);
+        }
     }
 
     public String getName() {
@@ -93,14 +138,12 @@ public class Employee {
 
     public int getBranchId() {return this.branchId;}
 
-    public void setBranchId(int branch_id) {this.branchId = branch_id;}
-
-
+    public void setBranchId(int branchId) {this.branchId = branchId;}
 
     public void work() {
-        if (schedule.contains(LocalDate.now())) {
+        if (schedule != null && schedule.contains(LocalDate.now())) {
             role.work(name, title, salary);
-        }else {
+        } else {
             System.out.printf("%s doesn't work today%n", name);
         }
     }

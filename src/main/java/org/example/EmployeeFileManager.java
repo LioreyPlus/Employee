@@ -26,7 +26,14 @@ public class EmployeeFileManager {
             int salary = Integer.parseInt(worker.get(3));
             String scheduleType = worker.get(4);
             String title = worker.get(5);
-            tempEmployees.add(new Employee(id, name, salary, scheduleType, title, role, null));
+            tempEmployees.add(Employee.builder()
+                    .id(id)
+                    .name(name)
+                    .salary(salary)
+                    .scheduleType(scheduleType)
+                    .title(title)
+                    .role(role)
+                    .build());
             if (!worker.get(6).isBlank()) {
                 chiefMap.put(id, Integer.parseInt(worker.get(6)));
             }

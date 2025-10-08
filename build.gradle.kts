@@ -1,6 +1,7 @@
 plugins {
     java
-    application
+    id("org.springframework.boot") version "3.1.0"
+    id("io.spring.dependency-management") version "1.1.0"
 }
 
 group = "org.example"
@@ -21,12 +22,8 @@ dependencies {
     implementation("org.apache.commons:commons-csv:1.14.1")
     implementation("com.github.javafaker:javafaker:1.0.2")
     implementation("org.xerial:sqlite-jdbc:3.42.0.0")
-    implementation("org.springframework:spring-context:6.0.11")
-    implementation("jakarta.annotation:jakarta.annotation-api:2.1.1")
-}
 
-application {
-    mainClass.set("org.example.Main")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 }
 
 tasks.test {

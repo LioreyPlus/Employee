@@ -90,7 +90,14 @@ public class EmployeeQueryManager {
         String title = rs.getString("title");
         Role role = Role.valueOf(rs.getString("role").toUpperCase());
 
-        Employee employee = new Employee(id, name, salary, scheduleType, title, role, null);
+        Employee employee = Employee.builder()
+                .id(id)
+                .name(name)
+                .salary(salary)
+                .scheduleType(scheduleType)
+                .title(title)
+                .role(role)
+                .build();
         int chiefId = rs.getInt("chief_id");
         return employee;
     }

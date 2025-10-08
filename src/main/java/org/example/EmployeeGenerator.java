@@ -23,8 +23,8 @@ public class EmployeeGenerator {
 
     public void generateRandomEmployeesByBranches(List<Employee> employees, List<Branch> branches, int count) {
 
-        int employeeCount = 57 + new Random().nextInt(5);
-        int developerCount = 27 + new Random().nextInt(5);
+        int employeeCount = 57 + random.nextInt(5);
+        int developerCount = 27 + random.nextInt(5);
         int branchManagerCount = count / 50;
         int managerCount = count - employeeCount - developerCount - 1 - branchManagerCount;
 
@@ -42,9 +42,6 @@ public class EmployeeGenerator {
                 .filter(e -> e.getRole() == role.getRequiredChiefRole())
                 .toList();
 
-        Random random = new Random();
-        Faker faker = new Faker();
-
         for (int i = 0; i < count; i++) {
             Employee chief = null;
             if (!potentialChiefs.isEmpty()) {
@@ -53,14 +50,16 @@ public class EmployeeGenerator {
 
             int id = generateUniqueId(employees);
             String name = faker.name().fullName();
-
-            Employee employee = new Employee(id, name);
-            employee.setRole(role);
-            employee.setChief(chief);
-            employee.setSalary(role.generateRandomSalary());
-            employee.setScheduleType(role.getScheduleType());
-            employee.setTitle(role.getRandomTitle());
-            employee.setBranchId(setCorrectBranchId(employee));
+            Employee employee = Employee.builder()
+                    .id(id)
+                    .name(name)
+                    .salary(role.generateRandomSalary())
+                    .scheduleType(role.getScheduleType())
+                    .title(role.getRandomTitle())
+                    .role(role)
+                    .chief(chief)
+                    .branchId(setCorrectBranchId(role, chief, id))
+                    .build();
 
             employees.add(employee);
         }
@@ -73,11 +72,17 @@ public class EmployeeGenerator {
                 .orElse(0) + 1;
     }
 
-    private int setCorrectBranchId(Employee employee) {
-        switch (employee.getRole()) {
-            case BRANCH_MANAGER -> {return employee.getId() - 1;}
-            case MANAGER, EMPLOYEE, DEVELOPER -> {return employee.getChief().getBranchId();}
-            default -> {return 0;}
+    private int setCorrectBranchId(Role role, Employee chief, int employeeId) {
+        switch (role) {
+            case BRANCH_MANAGER -> {
+                return employeeId - 1;
             }
+            case MANAGER, EMPLOYEE, DEVELOPER -> {
+                return chief != null ? chief.getBranchId() : 0;
+            }
+            default -> {
+                return 0;
+            }
+        }
     }
 }

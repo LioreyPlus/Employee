@@ -98,7 +98,15 @@ public class EmployeeDataBaseManager {
                 String title = rs.getString("title");
                 Role role = Role.valueOf(rs.getString("role").toUpperCase());
                 int branch_id = rs.getInt("branch_id");
-                Employee employee = new Employee(id, name, salary, scheduleType, title, role, null, null, branch_id);
+                Employee employee = Employee.builder()
+                        .id(id)
+                        .name(name)
+                        .salary(salary)
+                        .scheduleType(scheduleType)
+                        .title(title)
+                        .role(role)
+                        .branchId(branch_id)
+                        .build();
                 employees.add(employee);
                 employeeMap.put(id, employee);
 
