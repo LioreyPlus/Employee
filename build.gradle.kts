@@ -22,7 +22,8 @@ dependencies {
     implementation("org.apache.commons:commons-csv:1.14.1")
     implementation("com.github.javafaker:javafaker:1.0.2")
     implementation("org.xerial:sqlite-jdbc:3.42.0.0")
-
+    compileOnly ("org.projectlombok:lombok:1.18.30")
+    annotationProcessor ("org.projectlombok:lombok:1.18.30")
     implementation("org.springframework.boot:spring-boot-starter-web")
 }
 

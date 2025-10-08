@@ -1,5 +1,10 @@
 package org.example;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Branch {
     private int id;
     private String name;
@@ -16,14 +21,4 @@ public class Branch {
         this.address = address;
         this.managerId = managerId;
     }
-
-    public int getId() {return this.id;}
-    public void setId(int id) { this.id = id;}
-    public String getName() {return this.name;}
-    public void setName(String name) {this.name = name;}
-    public String getAddress() {return this.address;}
-    public void setAddress(String address) {this.address = address;}
-    public int getManagerId() {return managerId;}
-    public void setManagerId(int managerId) {this.managerId = managerId;}
-
 }

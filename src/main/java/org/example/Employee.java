@@ -1,8 +1,12 @@
 package org.example;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.List;
-
+@Getter
+@Setter
 public class Employee {
     private int id;
     private String name;
@@ -14,7 +18,6 @@ public class Employee {
     private Employee chief;
     private int branchId;
 
-    // Приватный конструктор для Builder
     private Employee(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
@@ -92,53 +95,7 @@ public class Employee {
         }
     }
 
-    public String getName() {
-        return this.name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSalary() {
-        return this.salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Role getRole() { return this.role; }
-
-    public void setRole(Role role) { this.role = role; }
-
-    public int getId() { return id;}
-
-    public void setId(int id) { this.id = id; }
-
-    public Employee getChief() { return this.chief; }
-
-    public void setChief(Employee chief) { this.chief = chief; }
-
-    public List<LocalDate> getSchedule() {return this.schedule;}
-
-    public void setSchedule(List<LocalDate> schedule) { this.schedule = schedule;}
-
-    public String getScheduleType() {return  this.scheduleType;}
-
-    public void setScheduleType(String scheduleType) {this.scheduleType = scheduleType;}
-
-    public int getBranchId() {return this.branchId;}
-
-    public void setBranchId(int branchId) {this.branchId = branchId;}
 
     public void work() {
         if (schedule != null && schedule.contains(LocalDate.now())) {
