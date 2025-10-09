@@ -29,6 +29,23 @@ public class EmployeeController {
         return employeeService.getEmployeesByRole(role);
     }
 
+    @GetMapping("/branch/{branchId}")
+    public List<Employee> getEmployeesByBranch(@PathVariable int branchId) {
+        return employeeService.getEmployeesByBranch(branchId);
+    }
+
+    @GetMapping("/search")
+    public List<Employee> searchEmployees(@RequestParam String name) {
+        return employeeService.searchEmployeesByName(name);
+    }
+
+    @GetMapping("/salary-range")
+    public List<Employee> getEmployeesBySalaryRange(
+            @RequestParam int minSalary,
+            @RequestParam int maxSalary) {
+        return employeeService.getEmployeesBySalaryRange(minSalary, maxSalary);
+    }
+
     @GetMapping("/health")
     public String health() {
         return "Employee API is running with Spring Boot!";
